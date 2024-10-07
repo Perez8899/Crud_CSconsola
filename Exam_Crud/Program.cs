@@ -22,7 +22,7 @@ class Program
             switch (opcion)
             {
                 case "1":
-                    MostrarTodosLosCarros();
+                    ShowAllCars();
                     break;
                 case "2":
                     AddNewCart();
@@ -41,35 +41,34 @@ class Program
 
     } //llave cierre del MAIN
 
-    static void MostrarTodosLosCarros()
+    static void ShowAllCars()
     {
         try
         {
 
             using (MySqlConnection cnx = new MySqlConnection(conn)){
 
-            cnx.Open();                                                      //intentando abrir conexion
+            cnx.Open();                                                          //trying to open connection
             string query = "SELECT * FROM Car";
             MySqlCommand cmd = new MySqlCommand(query, cnx);
-            MySqlDataReader reader = cmd.ExecuteReader();
-                                                                             // Separador
-            Console.WriteLine(new string('-', 70));                                                               // Imprimir los encabezados de las columnas
-            Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10} {5,-12}", "ID", "Marca", "Modelo", "Año", "Precio", "Fecha Registro");
-            Console.WriteLine(new string('-', 70));                          // Separador
 
-            
-            CultureInfo culture = new CultureInfo("en-US");                  // Crear un objeto CultureInfo para la cultura "en-US" (dólar)
+            MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
+            Console.WriteLine(new string('-', 70));                            // Print column headers
+                Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
+            Console.WriteLine(new string('-', 70));                            // Separator
 
-            
-            while (reader.Read())                                            // Imprimir los datos de cada carro
-            { 
+                CultureInfo culture = new CultureInfo("en-US");                 // Create a CultureInfo object for the culture "en-US" (dollar)
+
+
+                while (reader.Read())                                            // Print the data of each car
+                { 
                 DateTime dateAdded = Convert.ToDateTime(reader["DateAdded"]);
                 Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10:C} {5,-12}",
                     reader["CarID"],
                     reader["Make"],
                     reader["Model"],
                     reader["Year"],
-                    Convert.ToDecimal(reader["Price"]).ToString("C", culture), // Formatear el precio con la cultura especificada
+                    Convert.ToDecimal(reader["Price"]).ToString("C", culture), // Format the price with the specified culture
                     dateAdded.ToString("yyyy-MM-dd"));
                 } //while closing key
             }
