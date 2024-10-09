@@ -22,10 +22,10 @@ class Program
             switch (opcion)
             {
                 case "1":
-                    ShowAllCars();
+                    ShowAllCars();                
                     break;
                 case "2":
-                    AddNewCar();
+                    AddNewCar();                 
                     break;
                 case "3":
                     UpdateCar();
@@ -96,7 +96,7 @@ class Program
                 cnx.Open();
 
                                   // Ask the user to enter the new cart details
-                Console.WriteLine("Enter the brand of the car:");
+                Console.WriteLine("\nEnter the brand of the car:");
                 string make = Console.ReadLine();
 
                 Console.WriteLine("Enter the car Model:");
@@ -128,7 +128,7 @@ class Program
                                   // Notify the user about the success of the operation
                 if (filasAfectadas > 0)
                 {
-                    Console.WriteLine("¡The new car has been created successfully!");
+                    Console.WriteLine("\n¡The new car has been created successfully!");
                 }
                 else
                 {
@@ -161,13 +161,16 @@ class Program
             cnx.Open();
 
                                 // Request the CarID of the car to update
-            Console.WriteLine("Enter the ID of the cart you want to UPDATE:");
+            Console.WriteLine("\nEnter the ID of the cart you want to UPDATE:");
             int carID = int.Parse(Console.ReadLine());
 
                                 // Check current car values
             string querySelect = "SELECT * FROM Car WHERE CarID = @CarID";
+
             MySqlCommand cmdSelect = new MySqlCommand(querySelect, cnx);
+
             cmdSelect.Parameters.AddWithValue("@CarID", carID);
+
             MySqlDataReader reader = cmdSelect.ExecuteReader();
 
             if (reader.Read())
@@ -194,7 +197,7 @@ class Program
             reader.Close();
 
                                 // Prompt for new values ​​or allow the user to leave fields blank so as not to update them
-             Console.WriteLine("Enter the new Brand (or press Enter to keep the current one):");
+             Console.WriteLine("\n Enter the new Brand (or press Enter to keep the current one):");
             string newMake = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(newMake)) newMake = null;
 
@@ -242,16 +245,16 @@ class Program
                 int affectedRows = cmdUpdate.ExecuteNonQuery();
                 if (affectedRows > 0)
                 {
-                    Console.WriteLine("¡The changes have been saved Successfully!");
+                    Console.WriteLine("\n¡The changes have been saved Successfully!");
                 }
                 else
                 {
-                    Console.WriteLine("No changes were made.");
+                    Console.WriteLine("\n No changes were made.");
                 }
             }
             else
             {
-                Console.WriteLine("Data has not been updated, as no new values ​​were entered.");
+                Console.WriteLine("\n Data has not been updated, as no new values ​​were entered.");
             }
 
            }
