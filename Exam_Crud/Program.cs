@@ -46,7 +46,7 @@ class Program
         MySqlConnection cnx = new MySqlConnection(connection);
         return cnx;
     }
-
+    // ---------------------------------------------------------------------------------------------
 
     static void ShowAllCars()
     {
@@ -60,7 +60,7 @@ class Program
 
                 MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
                 Console.WriteLine(new string('-', 67));                            // Print column headers
-                Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
+                Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-12} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
                 Console.WriteLine(new string('-', 67));                            // Separator
 
                 CultureInfo culture = new CultureInfo("en-US");                 // Create a CultureInfo object for the culture "en-US" (dollar)
@@ -69,7 +69,7 @@ class Program
                 while (reader.Read())                                            // Print the data of each car
                 {
                     DateTime dateAdded = Convert.ToDateTime(reader["DateAdded"]);
-                    Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10:C} {5,-12}",
+                    Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-12:C} {5,-12}",
                         reader["CarID"],
                         reader["Make"],
                         reader["Model"],
