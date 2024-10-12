@@ -4,8 +4,6 @@ using System.Globalization;
 
 class Program
 {
-    static string conn = "Server=localhost; Database=lenguaje_avanzado; UserId=root; Password=;";
-
     static void Main()
     {
         bool keepRunning = true;
@@ -41,37 +39,47 @@ class Program
 
     } // MAIN lock key
 
+    // Method that returns a MySQL connection--------------------------------------------------------
+    static MySqlConnection GetDatabaseConnection()
+    {
+        string connection = "Server=localhost; Database=lenguaje_avanzado; UserId=root; Password=;";
+        MySqlConnection cnx = new MySqlConnection(connection);
+        return cnx;
+    }
+
+
     static void ShowAllCars()
     {
         try
         {
+            using (MySqlConnection cnx = GetDatabaseConnection())                   //We call the function for the Connection
+            {
+                cnx.Open();                                                          //trying to open connection
+                string query = "SELECT * FROM Car";
+                MySqlCommand cmd = new MySqlCommand(query, cnx);
 
-            using (MySqlConnection cnx = new MySqlConnection(conn)){
-
-            cnx.Open();                                                          //trying to open connection
-            string query = "SELECT * FROM Car";
-            MySqlCommand cmd = new MySqlCommand(query, cnx);
-
-            MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
-            Console.WriteLine(new string('-', 67));                            // Print column headers
+                MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
+                Console.WriteLine(new string('-', 67));                            // Print column headers
                 Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
-            Console.WriteLine(new string('-', 67));                            // Separator
+                Console.WriteLine(new string('-', 67));                            // Separator
 
                 CultureInfo culture = new CultureInfo("en-US");                 // Create a CultureInfo object for the culture "en-US" (dollar)
 
 
                 while (reader.Read())                                            // Print the data of each car
-                { 
-                DateTime dateAdded = Convert.ToDateTime(reader["DateAdded"]);
-                Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10:C} {5,-12}",
-                    reader["CarID"],
-                    reader["Make"],
-                    reader["Model"],
-                    reader["Year"],
-                    Convert.ToDecimal(reader["Price"]).ToString("C", culture), // Format the price with the specified culture
-                    dateAdded.ToString("yyyy-MM-dd"));
+                {
+                    DateTime dateAdded = Convert.ToDateTime(reader["DateAdded"]);
+                    Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10:C} {5,-12}",
+                        reader["CarID"],
+                        reader["Make"],
+                        reader["Model"],
+                        reader["Year"],
+                        Convert.ToDecimal(reader["Price"]).ToString("C", culture), // Format the price with the specified culture
+                        dateAdded.ToString("yyyy-MM-dd"));
                 } //while closing key
-            }
+            
+             }
+          
         }catch (MySqlException ex)
         {
             Console.WriteLine($" Database connection error: {ex.Message}");
@@ -91,11 +99,11 @@ class Program
     {
         try
         {
-            using (MySqlConnection cnx = new MySqlConnection(conn))
+            using (MySqlConnection cnx = GetDatabaseConnection())//We call the function for the Connection
             {
                 cnx.Open();
 
-                                  // Ask the user to enter the new cart details
+                                                               // Ask the user to enter the new cart details
                 Console.WriteLine("\nEnter the brand of the car:");
                 string make = Console.ReadLine();
 
@@ -108,10 +116,10 @@ class Program
                 Console.WriteLine("Enter the Price of the car:");
                 decimal price = decimal.Parse(Console.ReadLine());
 
-                                   // Get current date automatically
+                                                           // Get current date automatically
                 DateTime dateAdded = DateTime.Now;
 
-                                  // SQL query to insert the new cart
+                                                           // SQL query to insert the new cart
                 string queryInsert = "INSERT INTO Car (Make, Model, Year, Price, DateAdded) " +
                                      "VALUES (@Make, @Model, @Year, @Price, @DateAdded)";  //parameters, to avoid SQL injection attacks and handle data securely.
 
@@ -122,10 +130,10 @@ class Program
                 cmdInsert.Parameters.AddWithValue("@Price", price);
                 cmdInsert.Parameters.AddWithValue("@DateAdded", dateAdded.ToString("yyyy-MM-dd"));
 
-                                  // Run insert into database
+                                                         // Run insert into database
                 int filasAfectadas = cmdInsert.ExecuteNonQuery();
 
-                                  // Notify the user about the success of the operation
+                                                        // Notify the user about the success of the operation
                 if (filasAfectadas > 0)
                 {
                     Console.WriteLine("\n¡The new car has been created successfully!");
@@ -156,8 +164,8 @@ class Program
         try
         {
 
-            using (MySqlConnection cnx = new MySqlConnection(conn))
-        {
+            using (MySqlConnection cnx = GetDatabaseConnection()) //We call the function for the Connection
+            {
             cnx.Open();
 
                                 // Request the CarID of the car to update
