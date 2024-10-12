@@ -16,7 +16,7 @@ class Program
             Console.WriteLine("1. View All Cars");
             Console.WriteLine("2. Add a New Car");
             Console.WriteLine("3. Update an Existing Car");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("4. Exit \n");
             string opcion = Console.ReadLine();
 
             switch (opcion)
@@ -53,9 +53,9 @@ class Program
             MySqlCommand cmd = new MySqlCommand(query, cnx);
 
             MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
-            Console.WriteLine(new string('-', 70));                            // Print column headers
+            Console.WriteLine(new string('-', 67));                            // Print column headers
                 Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-10} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
-            Console.WriteLine(new string('-', 70));                            // Separator
+            Console.WriteLine(new string('-', 67));                            // Separator
 
                 CultureInfo culture = new CultureInfo("en-US");                 // Create a CultureInfo object for the culture "en-US" (dollar)
 
