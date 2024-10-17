@@ -184,17 +184,17 @@ class Program
             if (reader.Read())
             {
                 Console.WriteLine("Current car values:");
-                string currentMake = reader["Make"].ToString();
-                string currentModel = reader["Model"].ToString();
-                int currentYear = Convert.ToInt32(reader["Year"]);
-                decimal currentPrice = Convert.ToDecimal(reader["Price"]);
-                DateTime currentDateAdded = Convert.ToDateTime(reader["DateAdded"]);
+                string makeActual = reader["Make"].ToString();
+                string modelActual = reader["Model"].ToString();
+                int yearActual = Convert.ToInt32(reader["Year"]);
+                decimal priceActual = Convert.ToDecimal(reader["Price"]);
+                DateTime dateAddedActual = Convert.ToDateTime(reader["DateAdded"]);
 
-                Console.WriteLine($"Make: {currentMake}");
-                Console.WriteLine($"Model: {currentModel}");
-                Console.WriteLine($"Year: {currentYear}");
-                Console.WriteLine($"Price: {currentPrice}");
-                Console.WriteLine($"Date Add: {currentDateAdded.ToString("yyyy-MM-dd")}");
+                Console.WriteLine($"Make: {makeActual}");
+                Console.WriteLine($"Model: {modelActual}");
+                Console.WriteLine($"Year: {yearActual}");
+                Console.WriteLine($"Price: {priceActual}");
+                Console.WriteLine($"Date Add: {dateAddedActual.ToString("yyyy-MM-dd")}");
             }
             else
             {
