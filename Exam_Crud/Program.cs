@@ -58,8 +58,8 @@ class Program
                 string query = "SELECT * FROM Car";
                 MySqlCommand cmd = new MySqlCommand(query, cnx);
 
-                MySqlDataReader reader = cmd.ExecuteReader();                       // Separator
-                Console.WriteLine(new string('-', 67));                            // Print column headers
+                MySqlDataReader reader = cmd.ExecuteReader();                       
+                Console.WriteLine(new string('-', 67));  // Separator               // Print column headers
                 Console.WriteLine("{0,-5} {1,-15} {2,-15} {3,-5} {4,-12} {5,-12}", "ID", "Make", "Model", "Year", "Price", "Date Add");
                 Console.WriteLine(new string('-', 67));                            // Separator
 
@@ -131,10 +131,10 @@ class Program
                 cmdInsert.Parameters.AddWithValue("@DateAdded", dateAdded.ToString("yyyy-MM-dd"));
 
                                                          // Run insert into database
-                int filasAfectadas = cmdInsert.ExecuteNonQuery();
+                int affectedRows = cmdInsert.ExecuteNonQuery();
 
                                                         // Notify the user about the success of the operation
-                if (filasAfectadas > 0)
+                if (affectedRows > 0)
                 {
                     Console.WriteLine("\n¡The new car has been created successfully!");
                 }
@@ -184,17 +184,17 @@ class Program
             if (reader.Read())
             {
                 Console.WriteLine("Current car values:");
-                string makeActual = reader["Make"].ToString();
-                string modelActual = reader["Model"].ToString();
-                int yearActual = Convert.ToInt32(reader["Year"]);
-                decimal priceActual = Convert.ToDecimal(reader["Price"]);
-                DateTime dateAddedActual = Convert.ToDateTime(reader["DateAdded"]);
+                string currentMake = reader["Make"].ToString();
+                string currentModel = reader["Model"].ToString();
+                int currentYear = Convert.ToInt32(reader["Year"]);
+                decimal currentPrice = Convert.ToDecimal(reader["Price"]);
+                DateTime currentDateAdded = Convert.ToDateTime(reader["DateAdded"]);
 
-                Console.WriteLine($"Make: {makeActual}");
-                Console.WriteLine($"Model: {modelActual}");
-                Console.WriteLine($"Year: {yearActual}");
-                Console.WriteLine($"Price: {priceActual}");
-                Console.WriteLine($"Date Add: {dateAddedActual.ToString("yyyy-MM-dd")}");
+                Console.WriteLine($"Make: {currentMake}");
+                Console.WriteLine($"Model: {currentModel}");
+                Console.WriteLine($"Year: {currentYear}");
+                Console.WriteLine($"Price: {currentPrice}");
+                Console.WriteLine($"Date Add: {currentDateAdded.ToString("yyyy-MM-dd")}");
             }
             else
             {
